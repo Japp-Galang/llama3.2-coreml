@@ -32,7 +32,7 @@ class KvCacheStateLlamaForCausalLM(torch.nn.Module):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = LlamaForCausalLM.from_pretrained(
             model_path,
-            torch_dtype=torch.float16,
+            torch_dtype=torch.float32,
             device_map=self.device
         ).eval()
         
@@ -91,7 +91,7 @@ def export_kv_cache_model(
             ct.TensorType(shape=input_shape, dtype=np.int32, name="attentionMask"),
         ]
         
-        outputs = [ct.TensorType(dtype=np.float16, name="logits")]
+        outputs = [ct.TensorType(dtype=np.float32, name="logits")]
         
         mlmodel = ct.convert(
             traced_model,

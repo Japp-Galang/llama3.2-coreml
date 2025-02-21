@@ -74,7 +74,7 @@ def export_baseline_model(
             ct.TensorType(shape=input_shape, dtype=np.int32, name="attentionMask"),
         ]
         
-        outputs = [ct.TensorType(dtype=np.float16, name="logits")]
+        outputs = [ct.TensorType(dtype=np.float32, name="logits")]
         
         mlmodel = ct.convert(
             traced_model,
